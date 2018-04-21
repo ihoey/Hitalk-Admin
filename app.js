@@ -51,6 +51,7 @@ app.post('/login', function(req, res) {
         res.redirect('/comments'); // 跳转到个人资料页面
     }, function(error) {
         //登录失败，跳转到登录页面
+        console.log(error);
         res.redirect('/');
     });
 });

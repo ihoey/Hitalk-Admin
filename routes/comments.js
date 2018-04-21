@@ -2,6 +2,7 @@
 const router = require('express').Router();
 const AV = require('leanengine');
 const mail = require('../utilities/send-mail');
+const config = require('../config');
 
 const Comment = AV.Object.extend('Comment');
 
@@ -13,13 +14,13 @@ router.get('/', function (req, res, next) {
         query.limit(50);
         query.find().then(function (results) {
             res.render('comments', {
-                title: process.env.SITE_NAME + '上的评论',
+                title: config.SITE_NAME + '上的评论',
                 comment_list: results
             });
         }, function (err) {
             if (err.code === 101) {
                 res.render('comments', {
-                    title: process.env.SITE_NAME + '上的评论',
+                    title: config.SITE_NAME + '上的评论',
                     comment_list: []
                 });
             } else {
