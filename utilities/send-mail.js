@@ -2,7 +2,7 @@
  * @Author: ihoey 
  * @Date: 2018-04-27 10:55:18 
  * @Last Modified by: ihoey
- * @Last Modified time: 2018-04-27 11:16:28
+ * @Last Modified time: 2018-04-27 12:00:20
  */
 
 const config = require('../config');
@@ -16,6 +16,8 @@ const transporter = nodemailer.createTransport({
         pass: config.SMTP_PASS
     }
 });
+
+console.log(config);
 
 exports.notice = (comment) => {
     let emailSubject = '👉 咚！「' + config.SITE_NAME + '」上有新评论了';
@@ -75,7 +77,7 @@ exports.send = (currentComment, parentComment) => {
         subject: emailSubject,
         html: emailContent
     };
-
+    console.log(mailOptions);
     transporter.sendMail(mailOptions, (error, info) => {
         if (error) {
             return console.log(error);
