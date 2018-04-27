@@ -1,24 +1,29 @@
-'use strict';
+/*
+ * @Author: ihoey 
+ * @Date: 2018-04-27 10:55:43 
+ * @Last Modified by: ihoey
+ * @Last Modified time: 2018-04-27 10:57:03
+ */
+
 const router = require('express').Router();
 const AV = require('leanengine');
 const mail = require('../utilities/send-mail');
 const config = require('../config');
-
 const Comment = AV.Object.extend('Comment');
 
 // Comment 列表
-router.get('/', function (req, res, next) {
+router.get('/', (req, res, next) => {
     if (req.currentUser) {
         let query = new AV.Query(Comment);
         query.descending('createdAt');
         query.limit(50);
-        query.find().then(function (results) {
+        query.find().then(results => {
             res.render('comments', {
                 title: config.SITE_NAME + '上的评论',
                 domain: config.SITE_URL,
                 comment_list: results
             });
-        }, function (err) {
+        }, err => {
             if (err.code === 101) {
                 res.render('comments', {
                     title: config.SITE_NAME + '上的评论',
@@ -34,30 +39,26 @@ router.get('/', function (req, res, next) {
     }
 });
 
-router.get('/resend-email', function (req, res, next) {
+router.get('/resend-email', (req, res, next) => {
     if (req.currentUser) {
-    let query = new AV.Query(Comment);
-    query.get(req.query.id).then(function (object) {
-        query.get(object.get('rid')).then(function (parent) {
+        let query = new AV.Query(Comment);
+        query.get(req.query.id).then(object => {
+            query.get(object.get('rid')).then(parent => {
                 mail.send(object, parent);
                 res.redirect('/comments')
-            }, function (err) {
-            }
-        ).catch(next);
-    }, function (err) {
-    }).catch(next);
+            }).catch(next);
+        }).catch(next);
     } else {
         res.redirect('/');
     }
 });
 
-router.get('/delete', function (req, res, next) {
+router.get('/delete', (req, res, next) => {
     if (req.currentUser) {
         let query = new AV.Query(Comment);
-        query.get(req.query.id).then(function (object) {
+        query.get(req.query.id).then(object => {
             object.destroy();
             res.redirect('/comments')
-        }, function (err) {
         }).catch(next);
     } else {
         res.redirect('/');

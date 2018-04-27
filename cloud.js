@@ -1,7 +1,14 @@
+/*
+ * @Author: ihoey 
+ * @Date: 2018-04-27 10:51:51 
+ * @Last Modified by:   ihoey 
+ * @Last Modified time: 2018-04-27 10:51:51 
+ */
+
 const AV = require('leanengine');
 const mail = require('./utilities/send-mail');
 
-AV.Cloud.afterSave('Comment', function (request) {
+AV.Cloud.afterSave('Comment', request => {
     let currentComment = request.object;
 
     // 发送博主通知邮件
@@ -22,14 +29,14 @@ AV.Cloud.afterSave('Comment', function (request) {
     // 将rid存入数据库，以供管理页面使用。
     currentComment.set('rid', rid);
     let query = new AV.Query('Comment');
-    query.get(rid).then(function (parentComment) {
+    query.get(rid).then(parentComment => {
         if (parentComment.get('mail')) {
             mail.send(currentComment, parentComment);
             console.log("这条评论 @ 了其他人, 已提醒至对方邮箱:" + parentComment.get('mail'));
         } else {
             console.log("这条 @ 了其他人， 但被 @ 的人没留邮箱... 无法通知");
         }
-    }, function (error) {
+    }, error => {
         console.warn('好像 @ 了一个不存在的人!');
     });
 });

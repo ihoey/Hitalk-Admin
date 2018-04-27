@@ -1,4 +1,10 @@
-'use strict';
+/*
+ * @Author: ihoey 
+ * @Date: 2018-04-27 10:55:18 
+ * @Last Modified by:   ihoey 
+ * @Last Modified time: 2018-04-27 10:55:18 
+ */
+
 const config = require('../config');
 const nodemailer = require('nodemailer');
 const transporter = nodemailer.createTransport({
