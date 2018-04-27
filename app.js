@@ -2,7 +2,7 @@
  * @Author: ihoey 
  * @Date: 2018-04-27 10:51:10 
  * @Last Modified by: ihoey
- * @Last Modified time: 2018-04-27 10:54:19
+ * @Last Modified time: 2018-04-27 11:10:44
  */
 
 const express = require('express');
@@ -77,7 +77,7 @@ app.get('/logout', (req, res) => {
 app.use((req, res, next) => {
     // 如果任何一个路由都没有返回响应，则抛出一个 404 异常给后续的异常处理器
     if (!res.headersSent) {
-        var err = new Error('Not Found');
+        let err = new Error('Not Found');
         err.status = 404;
         next(err);
     }
@@ -120,7 +120,7 @@ app.locals.dateFormat = date => {
 };
 
 const padWithZeros = (vNumber, width) => {
-    const numAsString = vNumber.toString();
+    let numAsString = vNumber.toString();
     while (numAsString.length < width) {
         numAsString = '0' + numAsString;
     }

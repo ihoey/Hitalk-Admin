@@ -14,10 +14,10 @@
 
     <ul class="content">
         <% for(var i = 0; i < comment_list.length; i++) { %>
-        <li class="vcard">
+        <% var id = comment_list[i].id %>
+        <li class="vcard" id="<%= id %>">
             <div class="vhead">
-                <a href="<%= comment_list[i].get('link') %>" target="_blank"
-                   rel="nofollow"> <%= comment_list[i].get('nick') %></a>
+                <a href="<%= comment_list[i].get('link') %>" target="_blank" rel="nofollow"> <%= comment_list[i].get('nick') %></a>
                 <% var date = comment_list[i].get('createdAt') %>
                 <span class="spacer">•</span><span class="vtime"><%= dateFormat(date) %></span>
                 <% var url = domain + comment_list[i].get('url') + "#comments" %>
@@ -29,11 +29,15 @@
             <div class="check">
                 <a class="red" href="/comments/delete?id=<%= comment_list[i].get('objectId') %>" rel="nofollow">删除</a>
                 <% if (comment_list[i].get('rid')) { %>
-                <% if(comment_list[i].get('isNotified')) { %>
+                <% if (comment_list[i].get('isNotified')) { %>
                 <span class="spacer">•</span><span class="vtime">通知已送达</span>
                 <% } else { %>
                 <span class="spacer">•</span>
+                <% if (comment_list[i].get('comment').indexOf('@Guest') == -1) {%>
                 <a href="/comments/resend-email?id=<%= comment_list[i].get('objectId') %>" rel="nofollow">重发通知邮件</a>
+                <% } else {%>
+                <span class="vtime">没有留邮箱，无法通知</span>
+                <% } %>
                 <% } %>
                 <% } %>
             </div>

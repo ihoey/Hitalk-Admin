@@ -2,7 +2,7 @@
  * @Author: ihoey 
  * @Date: 2018-04-27 10:55:43 
  * @Last Modified by: ihoey
- * @Last Modified time: 2018-04-27 10:57:03
+ * @Last Modified time: 2018-04-27 11:28:45
  */
 
 const router = require('express').Router();
@@ -44,8 +44,13 @@ router.get('/resend-email', (req, res, next) => {
         let query = new AV.Query(Comment);
         query.get(req.query.id).then(object => {
             query.get(object.get('rid')).then(parent => {
-                mail.send(object, parent);
-                res.redirect('/comments')
+                if (parent.get('mail')) {
+                    mail.send(object, parent);
+                    res.redirect('/comments')                    
+                    console.log("这条评论 @ 了其他人, 已提醒至对方邮箱:" + parent.get('mail'));
+                } else {
+                    console.log("这条 @ 了其他人， 但被 @ 的人没留邮箱... 无法通知");
+                }
             }).catch(next);
         }).catch(next);
     } else {
