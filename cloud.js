@@ -1,8 +1,8 @@
 /*
  * @Author: ihoey 
  * @Date: 2018-04-27 10:51:51 
- * @Last Modified by:   ihoey 
- * @Last Modified time: 2018-04-27 10:51:51 
+ * @Last Modified by: ihoey
+ * @Last Modified time: 2018-04-28 18:54:41
  */
 
 const AV = require('leanengine');
@@ -39,4 +39,9 @@ AV.Cloud.afterSave('Comment', request => {
     }, error => {
         console.warn('好像 @ 了一个不存在的人!');
     });
+});
+
+AV.Cloud.define('Sleep_Preventer', request => {
+    console.log(request);
+    console.log('启动定时函数', new Date(Date.now() + (8 * 60 * 60 * 1000)).toUTCString());
 });
