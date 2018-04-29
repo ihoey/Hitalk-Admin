@@ -2,7 +2,7 @@
  * @Author: ihoey 
  * @Date: 2018-04-27 10:51:10 
  * @Last Modified by: ihoey
- * @Last Modified time: 2018-04-27 11:10:44
+ * @Last Modified time: 2018-04-30 01:48:49
  */
 
 const express = require('express');
@@ -45,6 +45,7 @@ app.use(AV.Cloud.CookieSession({
 }));
 
 app.get('/', (req, res) => {
+    console.log('living');
     if (req.currentUser) {
         res.redirect('/comments');
     } else {
