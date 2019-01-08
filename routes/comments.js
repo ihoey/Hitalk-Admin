@@ -1,14 +1,16 @@
 /*
- * @Author: ihoey 
- * @Date: 2018-04-27 10:55:43 
+ * @Author: ihoey
+ * @Date: 2018-04-27 10:55:43
  * @Last Modified by: ihoey
- * @Last Modified time: 2018-04-27 11:28:45
+ * @Last Modified time: 2018-09-20 12:05:02
  */
 
 const router = require('express').Router();
 const AV = require('leanengine');
 const mail = require('../utilities/send-mail');
+const spam = require('../utilities/check-spam');
 const config = require('../config');
+
 const Comment = AV.Object.extend('Comment');
 
 // Comment 列表
@@ -35,7 +37,7 @@ router.get('/', (req, res, next) => {
             }
         }).catch(next);
     } else {
-        res.redirect('/login');
+        res.redirect('/');
     }
 });
 
@@ -46,7 +48,7 @@ router.get('/resend-email', (req, res, next) => {
             query.get(object.get('rid')).then(parent => {
                 if (parent.get('mail')) {
                     mail.send(object, parent);
-                    res.redirect('/comments')                    
+                    res.redirect('/comments')
                     console.log("这条评论 @ 了其他人, 已提醒至对方邮箱:" + parent.get('mail'));
                 } else {
                     console.log("这条 @ 了其他人， 但被 @ 的人没留邮箱... 无法通知");

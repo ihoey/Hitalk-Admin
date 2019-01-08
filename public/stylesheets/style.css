@@ -1,5 +1,5 @@
 body {
-    font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Droid Sans,Helvetica Neue,sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Droid Sans, Helvetica Neue, sans-serif;
     font-size: 1rem;
 }
 
@@ -29,8 +29,7 @@ li {
     padding: 0;
 }
 
-
-.header{
+.header {
     display: flex;
     -ms-flex-direction: row;
     flex-direction: row;
@@ -41,13 +40,10 @@ li {
     flex: 90%;
 }
 
-.logout-wrapper {
-
-}
-
-.comment-main{
+.comment-main {
     padding: 1rem 5rem;
 }
+
 .vhead {
     padding-bottom: 0.5rem;
 }
@@ -150,3 +146,7 @@ li {
     color: #ee1000;
 }
 
+.blue {
+    padding-left: 9px;
+    color: #33b1ff;
+}
