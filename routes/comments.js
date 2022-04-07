@@ -7,8 +7,8 @@
 
 const router = require('express').Router()
 const AV = require('leanengine')
-const mail = require('../utilities/send-mail')
-const spam = require('../utilities/check-spam')
+const mail = require('../utils/send-mail')
+// const spam = require('../utils/check-spam')
 const config = require('../config')
 
 const Comment = AV.Object.extend('Comment')

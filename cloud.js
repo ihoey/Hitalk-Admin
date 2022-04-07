@@ -6,7 +6,7 @@
  */
 
 const AV = require('leanengine')
-const mail = require('./utilities/send-mail')
+const mail = require('./utils/send-mail')
 
 AV.Cloud.afterSave('Comment', request => {
   let currentComment = request.object
@@ -48,7 +48,7 @@ AV.Cloud.define('Sleep_Preventer', request => {
   console.log('启动定时函数', new Date(Date.now() + 8 * 60 * 60 * 1000).toUTCString())
 })
 
-AV.Cloud.beforeSave('Comment', async function (request) {
+AV.Cloud.beforeSave('Comment', request => {
   var comment = request.object.get('comment')
   if (comment) {
     if (comment.length > 1000) {
