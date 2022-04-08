@@ -49,12 +49,17 @@ AV.Cloud.define('Sleep_Preventer', request => {
 })
 
 AV.Cloud.beforeSave('Comment', request => {
+  console.log('收到一条评论, 开始检查数据有效性')
   var comment = request.object.get('comment')
-  if (comment) {
-    if (comment.length > 1000) {
+  var nick = request.object.get('nick')
+  var mail = request.object.get('mail')
+  var link = request.object.get('link')
+  if (comment && nick && mail && link) {
+    if (comment.length > 1000 || nick.length > 20 || mail.length > 50 || link.length > 50) {
+      console.log('数据有误, 将被拒绝')
       // 截断并添加 '…'
       // request.object.set('comment', comment.substring(0, 140) + '…');
-      throw new AV.Cloud.Error('Comment is too big!')
+      throw new AV.Cloud.Error('data is too big!')
     }
   } else {
     // 不保存数据，并返回错误
